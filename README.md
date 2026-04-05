@@ -1,42 +1,95 @@
-# Sistem Informasi Manajemen Pengambilan KTP (Project KP Disdukcapil)
+# 🪪 Sistem Informasi Pencatatan & Pelacakan KTP Elektronik (Disdukcapil)
 
-Sistem Informasi Manajemen Pengambilan KTP adalah aplikasi berbasis web yang dirancang khusus untuk memfasilitasi Dinas Kependudukan dan Pencatatan Sipil (Disdukcapil) dalam mengelola, melacak, dan mengaudit proses serah terima Kartu Tanda Penduduk (KTP) kepada warga.
+Proyek ini merupakan **Sistem Informasi Berbasis Web** yang dirancang sebagai tugas akhir / laporan Kerja Praktik (KP). Aplikasi ini dibuat khusus untuk memodernisasi dan mendigitalkan alur pencatatan serta manajemen status pembuatan Kartu Tanda Penduduk Elektronik (KTP-el) di lingkungan Dinas Kependudukan dan Pencatatan Sipil (Disdukcapil).
 
-## 💻 Arsitektur & Tech Stack
-- **Framework Utama:** Laravel (PHP)
-- **Database:** MySQL
-- **Frontend / UI:** Laravel Blade Templates & Custom CSS
-- **Autentikasi:** Laravel Auth (Session-based)
-- **Ekspor Data:** Maatwebsite Excel (untuk rekapitulasi)
+---
 
-## 🚀 Fitur Utama
+## 📖 Latar Belakang Proyek
+Pencatatan data pengajuan KTP-el serta pemantauan status pencetakannya acap kali masih dikerjakan secara manual menggunakan buku besar atau arsip parsial. Proses ini rentan terhadap kendala kelambatan pencarian arsip, kehilangan data pendukung, serta pelacakan progres pembuatan yang tidak efisien. 
 
-### 1. Autentikasi & Otorisasi Ketat
-- **Login Petugas/Admin:** Wajib login untuk akses sistem.
-- **Registrasi Tertutup:** Pendaftaran mandiri dinonaktifkan untuk menjaga keamanan data; hanya Admin yang dapat menambahkan pengguna.
-- **Role-Based Access Control:** Pembagian hak akses tegas antara `Admin` dan `Petugas`.
+Sistem ini diinisiasi untuk mengatasi masalah tersebut dengan mengembangkan sebuah pangkalan data **(database)** terpusat di mana pembaruan progres penerbitan dokumen KTP (seperti *'Sedang Diajukan'*, *'Tercetak'*, hingga *'Selesai'* ) dapat dikontrol dengan sangat instan dan akurat.
 
-### 2. Dasbor Utama
-- **Welcome Banner & Statistik:** Menampilkan sapaan dan perhitungan *real-time* jumlah antrean KTP, KTP yang sudah selesai, dan persentase keberhasilan.
-- **Log Aktivitas:** Pantauan pergerakan antrean terbaru secara langsung di halaman depan.
+## 🌟 Nilai Utama (*Core Value*)
+Hal yang menjadi sorotan utama dari arsitektur aplikasi ini adalah perombakan **Manajemen Hak Akses Bekerja Secara Kolaboratif & Transparan**. 
+Aplikasi ini membagi *user* ke dalam peran `Petugas` (di garis depan) dan `Admin` (pengelola). Alih-alih menyekat data sehingga satu petugas tidak bisa melihat hasil inputan pekerja lainnya, sistem ini dibuat **100% transparan**. Semua riwayat penambahan atau pengubahan status e-KTP sinkron secara _real-time_ untuk bisa dilihat dan diedit bersama-sama, sehingga meminimalkan redundansi/penumpukan pencatatan arsip di lapangan.
 
-### 3. Manajemen Antrean & Serah Terima KTP
-- **Cegah NIK Ganda:** Sistem secara otomatis memvalidasi keunikan NIK (16 digit), menampilkan peringatan jika NIK sudah ada dalam antrean.
-- **Perhitungan Deadline Otomatis:** Menambahkan target SLA 5 hari kerja secara otomatis saat pendaftaran (mengabaikan akhir pekan).
-- **Audit Pengambilan KTP:** 
-  - Mencatat opsi pengambilan: **Oleh YBS (Yang Bersangkutan)** atau **Perwakilan (Kuasa)**.
-  - Wajib input NIK Pengambil jika dikuasakan.
-  - Mencatat *ID Petugas* yang melepaskan dokumen (`released_by`) untuk pertanggungjawaban.
-- **Bulk Delete:** Fitur khusus admin untuk menghapus banyak data seklaigus dalam satu klik.
+---
 
-### 4. Pelaporan & Ekspor Excel (Smart Export)
-- Filter laporan berdasarkan rentang waktu (*Start/End Date*) dan Status (*Pending/Completed*).
-- File Excel terformat rapi sesuai form pelaporan standar instansi (tanggal berformat Indonesia, header lengkap).
-- Angka NIK dan Nomor HP terlindungi dari *Scientific Format Notation* atau pemotongan angka nol di Ms. Excel.
+## 🚀 Fitur Utama Sistem
 
-### 5. Manajemen Pengguna & Profil
-- **Admin Only CRUD:** Admin dapat membuat, mengubah *role*, dan menghapus akses petugas.
-- **Avatar/Profile Picture:** Petugas dapat mengubah detail nama, password, dan foto profil mereka.
+1. **Dashboard Statistik** 📊
+   Pusat kendali antarmuka (*user interface*) yang ramah untuk melihat ringkasan berapa banyak e-KTP yang sedang terdaftar, diproses, atau yang sudah siap distribusi.
 
-## 💡 Nilai Tata Kelola
-Aplikasi ini menjawab kebutuhan transparansi dan audit operasional Disdukcapil. Jika terdapat klaim warga yang merasa KTP-nya belum diserahkan, sistem dapat melacak secara akurat *kapan* KTP diambil, *siapa petugas* yang memberikan, dan *siapa pihak* yang mengambilnya (baik YBS langsung maupun kuasa).
+2. **Otentikasi & Keamanan Sesi (*Login System*)** 🔐
+   Mencegah peretasan atau manipulasi bebas; hanya pihak berwenang (`Admin` dan `Petugas` yang sudah diregistrasi) yang memiliki hak membuka menu sistem di peladen Disdukcapil.
+
+3. **Modul Formulir Perekaman e-KTP Baru** 📝
+   Antarmuka ringkas yang mempermudah petugas pencatatan merangkum data krusial warga untuk disematkan dalam daftar antrean e-KTP.
+
+4. **Tabel Tracking & Update Status Progres** 🔄
+   Logika operasional cerdas di mana suatu *ID KTP* dapat dilacak statusnya secara langsung, dengan tombol responsif untuk me-mutasi status *(misalnya masyarakat yang KTP-nya sudah selesai dicetak)* tanpa *load* halaman yang lama. 
+
+---
+
+## 🛠️ Stack Teknologi (Tech Stack)
+
+Sistem Informasi KTP ini merupakan aplikasi _Full Stack_ murni yang dibangun dengan fondasi teknologi standar industri guna perawaran jangka panjang, yaitu:
+
+*   **Penyedia Backend & API:** 
+    *   **PHP (Versi 8.x)**
+    *   **Laravel Framework**: Digunakan untuk arsitektur pengamanan _routing_ dan struktur modul MVP.
+*   **Pengelola Database:** 
+    *   **MySQL**: Relasi database terstruktur.
+*   **Pengembang Frontend UI/UX:** 
+    *   **HTML5 & CSS3**
+    *   **JavaScript & AJAX**: Digunakan untuk rendering dan operasional transisi yang mulus.
+    *   *(Bootstrap/Tailwind)*: Gaya _styling_ desain antarmuka.
+
+---
+
+## ⚙️ Petunjuk Instalasi (Panduan _Clone_ & Jalankan di Lokal)
+
+Jika penguji atau pengguna ingin mengimplementasikan langsung sistem ini (misalnya di _localhost_ via XAMPP / WAMP server), berikut adakah instruksi setup yang wajib diikuti:
+
+1. **Unduh Repositori via Git Clone:**
+   ```bash
+   git clone https://github.com/rusydiardani/project_kp_final.git
+   ```
+
+2. **Masuk ke Direktori Proyek Utama:**
+   ```bash
+   cd project_kp_final
+   ```
+
+3. **Pasang Instalasi Paket Dependensi Vendor:**
+   Gunakan _Composer_ di terminal.
+   ```bash
+   composer install
+   ```
+
+4. **Siapkan Pengaturan Konfigurasi Lingkungan (`.env`):**
+   Salin berkas struktur contoh lalu beri nama `.env`, dan sinkronkan dengan *username* serta *database* MySQL lokal milik Anda.
+   ```bash
+   cp .env.example .env
+   ```
+
+5. **Bangun Ulang Kunci Otentikasi Enkripsi:**
+   ```bash
+   php artisan key:generate
+   ```
+
+6. **Migrasikan Struktur Tabel Databse:**
+   Bentuk _blueprint_ pangkalan data di server lokal agar semua _form_ berfungsi.
+   ```bash
+   php artisan migrate
+   ```
+
+7. **Jalankan Peladen Lokal Lararvel (*Localhost*):**
+   ```bash
+   php artisan serve
+   ```
+   *Buka Peramban / Browser PC Anda, lalu kunjungi `http://localhost:8000`.*
+
+---
+
+**© Hak Cipta - Dokumentasi Pengembangan Proyek Kerja Praktik (KP).**
