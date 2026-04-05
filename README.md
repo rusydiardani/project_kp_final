@@ -5,7 +5,7 @@ Proyek ini merupakan **Sistem Informasi Berbasis Web** yang dirancang sebagai tu
 ---
 
 ## 📖 Latar Belakang Proyek
-Pencatatan data pengajuan KTP-el serta pemantauan status pencetakannya setiap kali masih dikerjakan secara manual menggunakan buku besar. Proses ini rentan terhadap kendala kelambatan pencarian arsip, kehilangan data pendukung, serta pelacakan progres pembuatan yang tidak efisien. 
+Pencatatan data pengajuan KTP-el serta pemantauan status pencetakannya masih dikerjakan secara manual menggunakan buku besar. Proses ini rentan terhadap kendala kelambatan pencarian arsip, kehilangan data pendukung, serta pelacakan progres pembuatan yang tidak efisien. 
 
 Sistem ini diinisiasi untuk mengatasi masalah tersebut dengan mengembangkan sebuah pangkalan data **(database)** terpusat di mana pembaruan progres penerbitan dokumen KTP (seperti *'Sedang Diajukan'*, *'Tercetak'*, hingga *'Selesai'* ) dapat dikontrol dengan sangat instan dan akurat.
 
