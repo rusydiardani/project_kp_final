@@ -9,9 +9,7 @@ use Carbon\Carbon;
 class ServiceRequest extends Model
 {
     use HasFactory;
-
     protected $guarded = ['id'];
-
     protected static function booted()
     {
         static::creating(function ($model) {
@@ -22,16 +20,17 @@ class ServiceRequest extends Model
     protected $casts = [
         'submission_date' => 'date',
         'deadline_date' => 'date',
+        'picked_up_at' => 'datetime',
     ];
-
-    public function serviceType()
-    {
-        return $this->belongsTo(ServiceType::class);
-    }
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function releasedBy()
+    {
+        return $this->belongsTo(User::class, 'released_by');
     }
 
     // Accessor: Cek apakah mendekati deadline (< 2 hari)

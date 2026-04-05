@@ -27,15 +27,16 @@
                     <form action="{{ route('tracking.search') }}" method="POST">
                         @csrf
                         <div class="mb-4">
-                            <label class="form-label fw-bold text-muted small">NIK (NOMOR INDUK KEPENDUDUKAN)</label>
+                            <label class="form-label fw-bold text-muted small">TOKEN LAYANAN</label>
                             <div class="input-group input-group-lg">
                                 <span class="input-group-text bg-light border-end-0"><i
-                                        class="bi bi-person-badge text-muted"></i></span>
-                                <input type="text" name="nik" class="form-control border-start-0 ps-0 fw-bold"
-                                    placeholder="Contoh: 1234567890123456" required maxlength="16" minlength="16">
+                                        class="bi bi-ticket-detailed text-muted"></i></span>
+                                <input type="text" name="token"
+                                    class="form-control border-start-0 ps-0 fw-bold uppercase-input"
+                                    placeholder="Contoh: AKB123" required style="text-transform: uppercase;">
                             </div>
-                            <div class="form-text mt-2"><i class="bi bi-info-circle me-1"></i> Masukkan 16 digit NIK yang
-                                tertera di KTP/KK.</div>
+                            <div class="form-text mt-2"><i class="bi bi-info-circle me-1"></i> Masukkan Token Layanan yang
+                                tertera pada bukti pendaftaran.</div>
                         </div>
 
                         <button type="submit" class="btn btn-primary w-100 btn-lg shadow-sm py-3 rounded-pill fw-bold">

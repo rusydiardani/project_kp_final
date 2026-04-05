@@ -12,8 +12,10 @@
                 <div
                     class="card-header bg-white border-0 py-4 px-4 px-md-5 d-flex justify-content-between align-items-center flex-wrap gap-3">
                     <div>
-                        <small class="text-uppercase text-muted fw-bold letter-spacing-1">Nomor Registrasi</small>
-                        <h2 class="fw-bold text-primary mb-0 letter-spacing-1">{{ $service->registration_number }}</h2>
+                        <small class="text-uppercase text-muted fw-bold letter-spacing-1">Nama Pemohon</small>
+                        <h2 class="fw-bold text-primary mb-0 letter-spacing-1">{{ $service->applicant_name }}</h2>
+                        <div class="text-muted mt-1 small"><i class="bi bi-ticket-detailed me-1"></i> Token: <span
+                                class="fw-bold text-dark">{{ $service->tracking_token }}</span></div>
                     </div>
                     <div class="text-end">
                         @php
@@ -37,9 +39,10 @@
                         <!-- Submission Step -->
                         <div class="timeline-item active">
                             <div class="timeline-date">
-                                {{ \Carbon\Carbon::parse($service->submission_date)->translatedFormat('d F Y') }}</div>
+                                {{ \Carbon\Carbon::parse($service->submission_date)->translatedFormat('d F Y') }}
+                            </div>
                             <h6 class="fw-bold">Layanan Diajukan</h6>
-                            <p class="text-muted small">Permohonan <strong>{{ $service->serviceType->name }}</strong> telah
+                            <p class="text-muted small">Permohonan <strong>KTP Elektronik</strong> telah
                                 diterima oleh sistem.</p>
                         </div>
 
@@ -74,6 +77,10 @@
                                     <i class="bi bi-calendar-check text-primary fs-4 me-3"></i>
                                     <span
                                         class="fw-bold fs-5">{{ \Carbon\Carbon::parse($service->deadline_date)->translatedFormat('d F Y') }}</span>
+                                </div>
+                                <div class="mt-2 text-muted small" style="font-size: 0.8rem;">
+                                    <i class="bi bi-info-circle me-1"></i> Silakan cek secara berkala, layanan bisa saja
+                                    selesai lebih cepat (1 hari).
                                 </div>
                             </div>
                         </div>

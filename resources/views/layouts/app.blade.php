@@ -8,20 +8,24 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Bootstrap 5 CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="{{ asset('manifest.json') }}">
+    <meta name="theme-color" content="#0d6efd">
+
+    <!-- Bootstrap 5 Local -->
+    <link href="{{ asset('vendor/bootstrap.min.css') }}" rel="stylesheet">
+    <!-- Bootstrap Icons Local -->
+    <link rel="stylesheet" href="{{ asset('vendor/bootstrap-icons.css') }}">
     <!-- Custom Premium CSS -->
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 </head>
 
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light sticky-top shadow-sm">
-            <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-dark sticky-top shadow-sm">
+            <div class="container-xl">
                 <a class="navbar-brand d-flex align-items-center gap-2" href="{{ url('/') }}">
-                    <i class="bi bi-building-fill text-primary fs-4"></i>
+                    <img src="{{ asset('images/logopemko.png') }}" alt="Logo Pemko" style="height: 40px;">
                     <span>{{ config('app.name', 'Sistem Monitoring') }}</span>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -34,53 +38,68 @@
                     <ul class="navbar-nav me-auto ms-3">
                         @auth
                             <li class="nav-item">
-                                <a class="nav-link {{ request()->routeIs('dashboard') ? 'active fw-bold text-primary' : '' }}"
+                                <a class="nav-link text-nowrap {{ request()->routeIs('dashboard') ? 'active fw-bold text-primary' : '' }}"
                                     href="{{ route('dashboard') }}">
                                     <i class="bi bi-speedometer2 me-1"></i> Dashboard
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ request()->routeIs('services.*') ? 'active fw-bold text-primary' : '' }}"
+                                <a class="nav-link text-nowrap {{ request()->routeIs('services.*') ? 'active fw-bold text-primary' : '' }}"
                                     href="{{ route('services.index') }}">
                                     <i class="bi bi-file-earmark-text me-1"></i> Layanan
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-nowrap {{ request()->routeIs('reports.*') ? 'active fw-bold text-primary' : '' }}"
+                                    href="{{ route('reports.index') }}">
+                                    <i class="bi bi-file-earmark-bar-graph me-1"></i> Laporan
+                                </a>
+                            </li>
                         @endauth
+                        @can('admin')
+                            <li class="nav-item">
+                                <a class="nav-link text-nowrap {{ request()->routeIs('users.*') ? 'active fw-bold text-primary' : '' }}"
+                                    href="{{ route('users.index') }}">
+                                    <i class="bi bi-people me-1"></i> Manajemen User
+                                </a>
+                            </li>
+                        @endcan
                     </ul>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto align-items-center">
-                        <li class="nav-item me-2">
-                            <a class="btn btn-outline-primary rounded-pill px-4 btn-sm"
-                                href="{{ route('tracking.index') }}">
-                                <i class="bi bi-search me-1"></i> Cek Layanan Publik
-                            </a>
-                        </li>
 
                         @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item ms-2">
-                                    <a class="nav-link" href="{{ route('login') }}">Login Petugas</a>
-                                </li>
-                            @endif
+
                         @else
                             <li class="nav-item dropdown ms-3">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle d-flex align-items-center gap-2"
                                     href="#" role="button" data-bs-toggle="dropdown">
-                                    <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center"
-                                        style="width: 32px; height: 32px;">
-                                        {{ substr(Auth::user()->name, 0, 1) }}
-                                    </div>
+                                    @if(Auth::user()->avatar)
+                                        <img src="{{ asset('storage/' . Auth::user()->avatar) }}" class="rounded-circle"
+                                            width="32" height="32" style="object-fit: cover; border: 2px solid white;">
+                                    @else
+                                        <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center"
+                                            style="width: 32px; height: 32px;">
+                                            {{ substr(Auth::user()->name, 0, 1) }}
+                                        </div>
+                                    @endif
                                     <div>
                                         <div class="fw-bold small lh-1">{{ Auth::user()->name }}</div>
-                                        <div class="text-muted small" style="font-size: 0.75rem;">
-                                            {{ ucfirst(Auth::user()->role) }}</div>
+                                        <div class="text-white opacity-75 small" style="font-size: 0.75rem;">
+                                            {{ ucfirst(Auth::user()->role) }}
+                                        </div>
                                     </div>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end shadow border-0">
-                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                             document.getElementById('logout-form').submit();">
+                                    <a class="dropdown-item" href="{{ route('profile.edit') }}">
+                                        <i class="bi bi-person-circle me-2 text-primary"></i> Edit Profil
+                                    </a>
+                                    <hr class="dropdown-divider">
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();
+                                                                                                         document.getElementById('logout-form').submit();">
                                         <i class="bi bi-box-arrow-right me-2 text-danger"></i> Logout
                                     </a>
 
@@ -104,6 +123,21 @@
                     </div>
                 @endif
 
+                @if($errors->any())
+                    <div class="alert alert-danger border-0 shadow-sm alert-dismissible fade show">
+                        <div class="d-flex align-items-center gap-2 mb-2">
+                            <i class="bi bi-exclamation-triangle-fill fs-5"></i>
+                            <strong>Terdapat Kesalahan:</strong>
+                        </div>
+                        <ul class="mb-0">
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+
                 @yield('content')
             </div>
         </main>
@@ -112,7 +146,7 @@
             &copy; {{ date('Y') }} {{ config('app.name') }}. All rights reserved.
         </footer>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('vendor/bootstrap.bundle.min.js') }}"></script>
 </body>
 
 </html>

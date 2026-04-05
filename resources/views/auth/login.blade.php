@@ -68,11 +68,7 @@
                                     <i class="bi bi-box-arrow-in-right me-2"></i> {{ __('Masuk Sistem') }}
                                 </button>
 
-                                <div class="text-center">
-                                    <a href="{{ route('tracking.index') }}" class="small text-muted text-decoration-none">
-                                        &larr; Cek Layanan Publik
-                                    </a>
-                                </div>
+
                             </form>
                         </div>
                     </div>
