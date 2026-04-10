@@ -36,7 +36,6 @@ Sistem Informasi KTP ini merupakan aplikasi _Full Stack_ murni yang dibangun den
 - **Validasi NIK Ketat & Unik:** 
   - Sistem mewajibkan input NIK dalam format tepat 16 digit angka.
   - Memiliki fitur pencegahan NIK ganda: menampilkan sistem peringatan ramah (*user-friendly alert*) ke petugas bila NIK yang sama masih tercatat di dalam antrean belum selesai.
-- **Perhitungan Deadline Otomatis (SLA):** Sistem otomatis merumuskan *Service Level Agreement* (Tenggat Waktu) maksimal 5 hari kerja sejak tanggal KTP diajukan ke loket, dengan cerdas membedakan dan mengabaikan hari libur akhir pekan (Sabtu-Minggu).
 - **Rekam Jejak & Audit Pengambilan (Pickup Logging):**
   - **Identitas Pelepas Berkas:** Menyimpan *ID/Nama Petugas* (`released_by`) yang secara faktual menyerahkan fisik KTP ke pengunjung, untuk kontrol internal.
   - **Opsi Faktual Pengambil:** Opsi spesifik status pengambilan jatuh kepada siapanya. Terbagi menjadi 2 pilihan:
@@ -45,8 +44,8 @@ Sistem Informasi KTP ini merupakan aplikasi _Full Stack_ murni yang dibangun den
 - **Hapus Massal (Bulk Delete):** Fitur efisiensi administratif spesifik untuk membersihkan atau menghapus puluhan/ratusan *record* (data) sekaligus dengan 1x klik. 
 
 ### 4. 🖨️ Manajemen Pelaporan & Ekspor Format Tinggi (Smart Report)
-- **Logika Filter Transparan:** Mengumpulkan data serah-terima KTP yang sudah *Done/Completed/YBS* maupun yang masih *Pending* dalam menu Laporan, difilter berdasarkan *Start Date*, *End Date*, maupun kategorisasi spesifik.
-- **Fungsi Bulk Delete Laporan:** Admin dapat mengelola ukuran *database* dengan melaksanakan *Bulk Delete* catatan historis pada menu laporan pelacakan.
+- **Logika Filter Transparan:** Menyaring data rekam jejak KTP yang sudah berhasil diserahkan (*Completed*) berdasarkan rentang waktu (*Start & End Date*). Dilengkapi dengan **Filter Spesifik Metode Pengambilan** untuk menyeleksi cepat mana KTP yang diambil langsung oleh pemilik (YBS) dan mana yang diserahkan ke pihak lain (Diwakilkan).
+- **Fungsi Bulk Delete Laporan:** Admin dapat mengelola dan memangkas ukuran *database* dengan melaksanakan penghapusan massal (*Bulk Delete*) pada catatan historis pelacakan.
 - **Custom Excel Export (Maatwebsite):**
   - Mengunduh rekap dalam file Ms. Excel berstandar format laporan Instansi/Pemerintahan (termasuk *header* tabel representatif).
   - Menggunakan struktur Tanggal/Waktu khas Indonesia (e.g. 15 Agustus 2026).

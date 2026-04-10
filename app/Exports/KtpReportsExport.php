@@ -18,12 +18,14 @@ class KtpReportsExport implements FromCollection, WithHeadings, WithMapping, Sho
     protected $startDate;
     protected $endDate;
     protected $search;
+    protected $pickupMethod;
 
-    public function __construct($startDate = null, $endDate = null, $search = null)
+    public function __construct($startDate = null, $endDate = null, $search = null, $pickupMethod = null)
     {
         $this->startDate = $startDate;
         $this->endDate = $endDate;
         $this->search = $search;
+        $this->pickupMethod = $pickupMethod;
     }
 
     public function collection()
@@ -36,9 +38,17 @@ class KtpReportsExport implements FromCollection, WithHeadings, WithMapping, Sho
             $query->where(function ($q) {
                 $q->where('applicant_name', 'like', "%{$this->search}%")
                     ->orWhere('nik', 'like', "%{$this->search}%")
-                    ->orWhere('registration_number', 'like', "%{$this->search}%")
                     ->orWhere('taker_nik', 'like', "%{$this->search}%");
             });
+        }
+
+        // Filter Pickup Method (YBS / Diwakilkan)
+        if ($this->pickupMethod) {
+            if ($this->pickupMethod == 'ybs') {
+                $query->whereNull('taker_nik');
+            } elseif ($this->pickupMethod == 'diwakilkan') {
+                $query->whereNotNull('taker_nik');
+            }
         }
 
         // Filter Date Range (picked_up_at)

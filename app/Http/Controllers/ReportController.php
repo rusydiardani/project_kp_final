@@ -17,9 +17,17 @@ class ReportController extends Controller
             $query->where(function ($q) use ($search) {
                 $q->where('applicant_name', 'like', "%{$search}%")
                     ->orWhere('nik', 'like', "%{$search}%")
-                    ->orWhere('registration_number', 'like', "%{$search}%")
                     ->orWhere('taker_nik', 'like', "%{$search}%");
             });
+        }
+
+        // Filter Pickup Method (YBS / Diwakilkan)
+        if ($request->has('pickup_method') && $request->pickup_method != '') {
+            if ($request->pickup_method == 'ybs') {
+                $query->whereNull('taker_nik');
+            } elseif ($request->pickup_method == 'diwakilkan') {
+                $query->whereNotNull('taker_nik');
+            }
         }
 
         // Filter Date Range (picked_up_at)
@@ -40,6 +48,7 @@ class ReportController extends Controller
         $startDate = $request->start_date;
         $endDate = $request->end_date;
         $search = $request->search;
+        $pickupMethod = $request->pickup_method;
 
         $fileName = 'Laporan_Pengambilan_KTP';
         if ($startDate && $endDate) {
@@ -47,6 +56,6 @@ class ReportController extends Controller
         }
         $fileName .= '.xlsx';
 
-        return \Maatwebsite\Excel\Facades\Excel::download(new \App\Exports\KtpReportsExport($startDate, $endDate, $search), $fileName);
+        return \Maatwebsite\Excel\Facades\Excel::download(new \App\Exports\KtpReportsExport($startDate, $endDate, $search, $pickupMethod), $fileName);
     }
 }

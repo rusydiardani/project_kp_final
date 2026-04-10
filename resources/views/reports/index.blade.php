@@ -19,12 +19,17 @@
                             </div>
 
                             <!-- Search -->
-                            <div class="input-group input-group-sm" style="width: 250px;">
-                                <input type="text" name="search" class="form-control" placeholder="Cari Nama/NIK..." value="{{ request('search') }}">
+                            <div class="input-group input-group-sm" style="width: auto;">
+                                <select name="pickup_method" class="form-select" style="min-width: 160px;" title="Metode Ambil">
+                                    <option value="">Semua</option>
+                                    <option value="ybs" {{ request('pickup_method') == 'ybs' ? 'selected' : '' }}>YBS</option>
+                                    <option value="diwakilkan" {{ request('pickup_method') == 'diwakilkan' ? 'selected' : '' }}>Diwakilkan</option>
+                                </select>
+                                <input type="text" name="search" class="form-control" placeholder="Cari Nama/NIK..." value="{{ request('search') }}" style="min-width: 200px;">
                                 <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i> Cari</button>
                             </div>
                             
-                            @if(request('start_date') || request('end_date') || request('search'))
+                            @if(request('start_date') || request('end_date') || request('search') || request('pickup_method'))
                                 <a href="{{ route('reports.index') }}" class="btn btn-sm btn-outline-secondary" title="Reset Filter"><i class="bi bi-x-circle"></i> Reset</a>
                             @endif
                         </form>

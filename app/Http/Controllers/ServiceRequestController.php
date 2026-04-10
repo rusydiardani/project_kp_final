@@ -62,19 +62,11 @@ class ServiceRequestController extends Controller
             'nik.unique' => 'Data NIK ini sudah ada di dalam antrian/sistem. NIK tidak boleh sama.',
         ]);
 
-        // Hitung Deadline (addWeekdays ignores weekends, asumsikan SLA 5 hari)
-        $deadline = Carbon::parse($validated['submission_date'])->addWeekdays(5);
-
-        // Generate Registration Number (Simple)
-        $regNumber = 'REG-' . date('Ymd') . '-' . rand(1000, 9999);
-
         ServiceRequest::create([
-            'registration_number' => $regNumber,
             'nik' => $validated['nik'],
             'user_id' => Auth::id(),
             'applicant_name' => $validated['applicant_name'],
             'submission_date' => $validated['submission_date'],
-            'deadline_date' => $deadline,
             'status' => 'pending',
             'notes' => $validated['notes'] ?? null,
         ]);
