@@ -113,7 +113,7 @@
                                     <button type="submit" class="btn btn-primary rounded-pill px-4">
                                         <i class="bi bi-save me-1"></i> {{ __('Simpan Perubahan') }}
                                     </button>
-                                    <a href="{{ route('users.index') }}"
+                                    <a href="{{ route('dashboard') }}"
                                         class="btn btn-link text-decoration-none text-muted ms-2">
                                         Batal
                                     </a>
