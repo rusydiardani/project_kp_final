@@ -18,14 +18,10 @@
                             <input type="text" name="nik" class="form-control" placeholder="16 Digit NIK" minlength="16"
                                 maxlength="16" required>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-7">
                             <label class="form-label small fw-bold">Nama Pemohon</label>
                             <input type="text" name="applicant_name" class="form-control" placeholder="Nama Lengkap"
                                 required>
-                        </div>
-                        <div class="col-md-3">
-                            <label class="form-label small fw-bold">Catatan (Opsional)</label>
-                            <input type="text" name="notes" class="form-control" placeholder="Keterangan tambahan...">
                         </div>
                         <div class="col-md-2 d-flex align-items-end">
                             <button type="submit" class="btn btn-success w-100">
@@ -217,7 +213,7 @@
                         <div class="modal-body">
                             @if(auth()->user()->role === 'petugas')
                                 <div class="alert alert-warning small">
-                                    <i class="bi bi-exclamation-circle me-1"></i> Mode Perbaikan Typo: Anda hanya dapat mengubah NIK, Nama, dan Catatan.
+                                    <i class="bi bi-exclamation-circle me-1"></i> Mode Perbaikan Typo: Anda hanya dapat mengubah NIK dan Nama.
                                 </div>
                             @endif
                             <div class="mb-3">
@@ -227,10 +223,6 @@
                             <div class="mb-3">
                                 <label class="form-label fw-bold small">Nama Pemohon</label>
                                 <input type="text" name="applicant_name" class="form-control" value="{{ $s->applicant_name }}" required>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label fw-bold small">Catatan</label>
-                                <textarea name="notes" class="form-control" rows="3">{{ $s->notes }}</textarea>
                             </div>
                         </div>
                         <div class="modal-footer">

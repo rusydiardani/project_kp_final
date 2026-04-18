@@ -57,7 +57,6 @@ class ServiceRequestController extends Controller
             'nik' => 'required|string|size:16|unique:service_requests,nik',
             'applicant_name' => 'required|string|max:255',
             'submission_date' => 'required|date',
-            'notes' => 'nullable|string',
         ], [
             'nik.unique' => 'Data NIK ini sudah ada di dalam antrian/sistem. NIK tidak boleh sama.',
         ]);
@@ -68,7 +67,6 @@ class ServiceRequestController extends Controller
             'applicant_name' => $validated['applicant_name'],
             'submission_date' => $validated['submission_date'],
             'status' => 'pending',
-            'notes' => $validated['notes'] ?? null,
         ]);
 
         return redirect()->route('services.index')->with('success', 'Layanan berhasil didaftarkan.');
@@ -87,7 +85,6 @@ class ServiceRequestController extends Controller
         $validated = $request->validate([
             'nik' => 'required|string|size:16|unique:service_requests,nik,' . $service->id,
             'applicant_name' => 'required|string|max:255',
-            'notes' => 'nullable|string',
         ], [
             'nik.unique' => 'Data NIK ini sudah ada di dalam antrian/sistem. NIK tidak boleh sama.',
         ]);
