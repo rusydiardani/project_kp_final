@@ -51,7 +51,8 @@
                                 <div class="col-md-6">
                                     <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
                                         name="name" value="{{ old('name', auth()->user()->name) }}" required
-                                        autocomplete="name">
+                                        autocomplete="name" pattern="[a-zA-Z\s]+" title="Nama hanya boleh berisi huruf dan spasi">
+                                    <small class="text-muted d-block mt-1">Hanya huruf dan spasi yang diperbolehkan.</small>
 
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
@@ -68,7 +69,8 @@
                                 <div class="col-md-6">
                                     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
                                         name="email" value="{{ old('email', auth()->user()->email) }}" required
-                                        autocomplete="email">
+                                        autocomplete="email" placeholder="contoh: anonim23@disdukcapil.com">
+                                    <small class="text-muted d-block mt-1">Wajib menggunakan domain @disdukcapil.com</small>
 
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
@@ -111,6 +113,10 @@
                                     <button type="submit" class="btn btn-primary rounded-pill px-4">
                                         <i class="bi bi-save me-1"></i> {{ __('Simpan Perubahan') }}
                                     </button>
+                                    <a href="{{ route('users.index') }}"
+                                        class="btn btn-link text-decoration-none text-muted ms-2">
+                                        Batal
+                                    </a>
                                 </div>
                             </div>
                         </form>

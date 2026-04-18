@@ -30,12 +30,17 @@ class ProfileController extends Controller
     {
         $user = auth()->user();
 
+        $messages = [
+            'name.regex' => 'Nama hanya boleh berisi huruf dan spasi.',
+            'email.ends_with' => 'Email harus berakhiran dengan @disdukcapil.com.',
+        ];
+
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'name' => ['required', 'string', 'max:255', 'regex:/^[a-zA-Z\s]+$/'],
+            'email' => 'required|string|email|max:255|ends_with:@disdukcapil.com|unique:users,email,' . $user->id,
             'password' => 'nullable|string|min:8|confirmed',
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
+        ], $messages);
 
         $data = [
             'name' => $request->name,

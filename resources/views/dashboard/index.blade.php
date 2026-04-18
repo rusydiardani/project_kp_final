@@ -64,11 +64,6 @@
         <h2 class="fw-bold mb-2">Selamat Datang, {{ explode(' ', $user->name)[0] }}! <i class="bi bi-stars text-warning ms-1"></i></h2>
         <p class="mb-0 opacity-75 fs-5">Berikut adalah ringkasan operasional harian Disdukcapil.</p>
     </div>
-    <div style="z-index: 1;">
-        <a href="{{ route('services.index') }}" class="btn btn-light rounded-pill px-4 fw-bold shadow-sm text-primary">
-            <i class="bi bi-plus-circle me-1"></i> Input KTP Baru
-        </a>
-    </div>
 </div>
 
 <!-- Stats Section -->

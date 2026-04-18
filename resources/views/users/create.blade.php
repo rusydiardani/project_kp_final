@@ -18,7 +18,8 @@
 
                                 <div class="col-md-6">
                                     <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
-                                        name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                                        name="name" value="{{ old('name') }}" required autocomplete="name" autofocus pattern="[a-zA-Z\s]+" title="Nama hanya boleh berisi huruf dan spasi">
+                                    <small class="text-muted d-block mt-1">Hanya huruf dan spasi yang diperbolehkan.</small>
 
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
@@ -34,7 +35,8 @@
 
                                 <div class="col-md-6">
                                     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                                        name="email" value="{{ old('email') }}" required autocomplete="email">
+                                        name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="contoh: anonim23@disdukcapil.com">
+                                    <small class="text-muted d-block mt-1">Wajib menggunakan domain @disdukcapil.com</small>
 
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">

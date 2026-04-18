@@ -28,12 +28,17 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $messages = [
+            'name.regex' => 'Nama hanya boleh berisi huruf dan spasi.',
+            'email.ends_with' => 'Email harus berakhiran dengan @disdukcapil.com.',
+        ];
+
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'name' => ['required', 'string', 'max:255', 'regex:/^[a-zA-Z\s]+$/'],
+            'email' => 'required|string|email|max:255|ends_with:@disdukcapil.com|unique:users',
             'password' => 'required|string|min:8|confirmed',
             'role' => 'required|in:admin,petugas,supervisor',
-        ]);
+        ], $messages);
 
         \App\Models\User::create([
             'name' => $request->name,
@@ -69,12 +74,17 @@ class UserController extends Controller
     {
         $user = \App\Models\User::findOrFail($id);
 
+        $messages = [
+            'name.regex' => 'Nama hanya boleh berisi huruf dan spasi.',
+            'email.ends_with' => 'Email harus berakhiran dengan @disdukcapil.com.',
+        ];
+
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'name' => ['required', 'string', 'max:255', 'regex:/^[a-zA-Z\s]+$/'],
+            'email' => 'required|string|email|max:255|ends_with:@disdukcapil.com|unique:users,email,' . $user->id,
             'role' => 'required|in:admin,petugas,supervisor',
             'password' => 'nullable|string|min:8|confirmed',
-        ]);
+        ], $messages);
 
         $data = [
             'name' => $request->name,
