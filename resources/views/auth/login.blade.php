@@ -56,12 +56,7 @@
                                             {{ __('Ingat Saya') }}
                                         </label>
                                     </div>
-                                    @if (Route::has('password.request'))
-                                        <a class="text-decoration-none small text-primary fw-bold"
-                                            href="{{ route('password.request') }}">
-                                            Lupa Password?
-                                        </a>
-                                    @endif
+
                                 </div>
 
                                 <button type="submit" class="btn btn-primary w-100 py-2 rounded-pill shadow-sm mb-3">
